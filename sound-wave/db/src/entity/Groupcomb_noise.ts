@@ -1,16 +1,26 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  ManyToOne,
+} from 'typeorm';
+import { Noise } from './Noise';
 
 @Entity()
 export class Groupcomb_noise {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    groupcomb_id: number;
+  @Column()
+  groupcomb_id: number;
 
-    @Column()
-    noise_id: number;
-    
-    @CreateDateColumn({name: "created_at"})
-    createdAt: Date;
+  //   @Column()
+  //   noise_id: number;
+
+  @ManyToOne((type) => Noise, (noise) => noise.groupcomb_noises)
+  noise: Noise;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 }

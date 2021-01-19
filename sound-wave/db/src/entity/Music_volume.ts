@@ -1,19 +1,31 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToOne,
+  JoinColumn,
+} from 'typeorm';
+import { Group } from './Group';
 
 @Entity()
 export class Music_volume {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    group_id: number;
+  //   @Column()
+  //   group_id: number;
 
-    @Column()
-    music_url: string;
+  @Column()
+  music_url: string;
 
-    @Column()
-    volume: number;
-    
-    @CreateDateColumn({name: "created_at"})
-    createdAt: Date;
+  @Column()
+  volume: number;
+
+  @OneToOne((type) => Group)
+  @JoinColumn()
+  group: Group;
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 }

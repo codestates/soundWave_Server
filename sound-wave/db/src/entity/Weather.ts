@@ -1,13 +1,23 @@
-import {Entity, PrimaryGeneratedColumn, Column, CreateDateColumn} from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  CreateDateColumn,
+  OneToMany,
+} from 'typeorm';
+import { Group } from './Group';
 
 @Entity()
 export class Weather {
-    @PrimaryGeneratedColumn()
-    id: number;
+  @PrimaryGeneratedColumn()
+  id: number;
 
-    @Column()
-    weather: string;
-    
-    @CreateDateColumn({name: "created_at"})
-    createdAt: Date;
+  @Column()
+  weather: string;
+
+  @OneToMany((type) => Group, (group) => group.weather) // note: we will create author property in the Photo class below
+  groups: Group[];
+
+  @CreateDateColumn({ name: 'created_at' })
+  createdAt: Date;
 }
