@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Group } from './Group';
+import { Group } from './Group.entity';
 
 @Entity()
 export class Weather {

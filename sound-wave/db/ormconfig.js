@@ -10,7 +10,7 @@ module.exports = {
   database: process.env.DATABASE_DATABASE,
   synchronize: true,
   logging: false,
-  entities: ['src/entity/**/*.ts'],
+  entities: ["src/**/*.entity{.ts,.js}"],
   migrations: ['src/migration/**/*.ts'],
   subscribers: ['src/subscriber/**/*.ts'],
   cli: {

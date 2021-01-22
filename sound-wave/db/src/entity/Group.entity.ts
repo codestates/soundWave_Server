@@ -6,11 +6,11 @@ import {
   ManyToOne,
   OneToMany,
 } from 'typeorm';
-import { Music_volume } from './Music_volume';
-import { User } from './User';
-import { Weather } from './Weather';
-import { Noise_volume } from './Noise_volume';
-import { Groupcomb_music } from './Groupcomb_music';
+
+import { User } from './User.entity';
+import { Weather } from './Weather.entity';
+import { Noise_volume } from './Noise_volume.entity';
+import { Groupcomb_music } from './Groupcomb_music.entity';
 
 @Entity()
 export class Group {
@@ -20,16 +20,9 @@ export class Group {
   @Column()
   groupname: string;
 
-  // @Column()
-  // users_id: number;
   @ManyToOne((type) => User, (user) => user.groups)
   user: User;
 
-  //   @Column()
-  //   groupcomb_music: number;
-
-  // @Column()
-  // weathers_id: number;
   @ManyToOne((type) => Weather, (weather) => weather.groups)
   weather: Weather;
 
