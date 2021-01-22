@@ -1,28 +1,26 @@
-import { group } from 'console';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
-  ManyToOne,
+  OneToOne,
+  JoinColumn,
 } from 'typeorm';
-import { Group } from './Group';
+import { Group } from './Group.entity';
 
 @Entity()
-export class Noise_volume {
+export class Music_volume {
   @PrimaryGeneratedColumn()
   id: number;
 
-  //   @Column()
-  //   group_id: number;
-
   @Column()
-  noise_id: number;
+  music_url: string;
 
   @Column()
   volume: number;
 
-  @ManyToOne((type) => Group, (group) => group.noise_volumes)
+  @OneToOne((type) => Group)
+  @JoinColumn()
   group: Group;
 
   @CreateDateColumn({ name: 'created_at' })

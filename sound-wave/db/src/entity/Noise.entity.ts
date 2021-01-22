@@ -5,14 +5,15 @@ import {
   CreateDateColumn,
   OneToMany,
 } from 'typeorm';
-import { Groupcomb_noise } from './Groupcomb_noise';
+import { Groupcomb_noise } from './Groupcomb_noise.entity';
+
 @Entity()
 export class Noise {
   @PrimaryGeneratedColumn()
   id: number;
 
   @Column()
-  noise_name: string;
+  name: string;
 
   @Column()
   url: string;

@@ -5,7 +5,7 @@ import {
   CreateDateColumn,
   ManyToOne,
 } from 'typeorm';
-import { Noise } from './Noise';
+import { Noise } from './Noise.entity';
 
 @Entity()
 export class Groupcomb_noise {
@@ -14,9 +14,6 @@ export class Groupcomb_noise {
 
   @Column()
   groupcomb_id: number;
-
-  //   @Column()
-  //   noise_id: number;
 
   @ManyToOne((type) => Noise, (noise) => noise.groupcomb_noises)
   noise: Noise;
