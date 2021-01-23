@@ -1,8 +1,6 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { Noise } from './entity/Noise.entity';
-// import {User} from "./entity/User";
-// import {Group} from "./entity/Group";
 
 createConnection()
   .then(async (connection) => {
@@ -33,7 +31,7 @@ createConnection()
     // console.log("Here you can setup and run express/koa/any other framework.");
     let noiseRepository = connection.getRepository(Noise);
     let checkedNoises = await noiseRepository.find();
-
+    
     // noise 데이터가 없을 경우만 실행
     if (checkedNoises.length === 0) {
       // console.log(checkedNoises);
