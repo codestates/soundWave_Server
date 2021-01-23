@@ -9,12 +9,12 @@ export class NoisesController {
 
   @Get()
   async findAll(@Res() res: Response): Promise<any> {
-	const noiseList = await this.noiseService.getAllNoises();
-	
-	res.status(HttpStatus.OK).json({
-	  "data" : {
-      "noises" : noiseList
-    }
-	});
+    const noiseList = await this.noiseService.getAllNoises();
+
+    res.status(HttpStatus.OK).json({
+      data: {
+        noises: noiseList,
+      },
+    });
   }
 }

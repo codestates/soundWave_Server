@@ -1,17 +1,19 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Noise } from '../../db/src/entity/Noise.entity';
+import { Noise } from '../entity/Noise.entity';
 
 @Injectable()
 export class NoisesService {
   constructor(
     @InjectRepository(Noise)
-    private readonly noiseRepository: Repository<Noise>
+    private readonly noiseRepository: Repository<Noise>,
   ) {}
-   
-  async getAllNoises(): Promise<Noise[]> {
-    return this.noiseRepository.createQueryBuilder("noise").select(['noise.name', 'noise.url']).getMany();
-  }
 
+  async getAllNoises(): Promise<Noise[]> {
+    return this.noiseRepository
+      .createQueryBuilder('noise')
+      .select(['noise.name', 'noise.url'])
+      .getMany();
+  }
 }
