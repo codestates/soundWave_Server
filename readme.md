@@ -38,8 +38,8 @@ $ npm install
 # migration
 $ npm run start:db
 
-#seed
-$npm run seed:run
+# seed
+$ npm run seed:run
 
 # development
 $ npm run start
