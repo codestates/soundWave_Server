@@ -20,10 +20,10 @@ export class Group {
   @Column()
   groupname: string;
 
-  @ManyToOne((type) => User, (user) => user.groups)
+  @ManyToOne((type) => User, (user) => user.groups, { eager: true })
   user: User;
 
-  @ManyToOne((type) => Weather, (weather) => weather.groups)
+  @ManyToOne((type) => Weather, (weather) => weather.groups, { eager: true })
   weather: Weather;
 
   @OneToMany((type) => Noise_volume, (noise_volume) => noise_volume.group) // note: we will create author property in the Photo class below
@@ -32,6 +32,7 @@ export class Group {
   @ManyToOne(
     (type) => Groupcomb_music,
     (groupcomb_music) => groupcomb_music.groups,
+    { eager: true },
   )
   groupcomb_music: Groupcomb_music;
 

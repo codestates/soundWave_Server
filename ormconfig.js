@@ -11,9 +11,9 @@ module.exports = {
   synchronize: true,
   logging: false,
   entities: ['dist/**/*.entity{.ts,.js}'],
-  migrations: ['src/migration/**/*.ts'],
+  migrations: ['dist/migration/*.js'],
   subscribers: ['src/subscriber/**/*.ts'],
-  seeds: ['src/seeds/**/*{.ts,.js}'],
+  seeds: ['dist/seeds/*.js'],
   factories: ['src/factories/**/*{.ts,.js}'],
   cli: {
     entitiesDir: 'src/entity',
