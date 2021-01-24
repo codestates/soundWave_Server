@@ -1,6 +1,6 @@
 import { Factory, Seeder } from 'typeorm-seeding';
 import { Connection } from 'typeorm';
-import { Noise } from '../../dist/entity/Noise.entity';
+import { Noise } from '../entity/Noise.entity';
 
 export default class CreateNoises implements Seeder {
   public async run(factory: Factory, connection: Connection): Promise<any> {
