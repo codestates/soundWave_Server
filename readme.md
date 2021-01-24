@@ -35,6 +35,12 @@ $ npm install
 ## Running the app
 
 ```bash
+# migration
+$ npm run start:db
+
+#seed
+$npm run seed:run
+
 # development
 $ npm run start
 
