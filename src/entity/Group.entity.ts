@@ -6,9 +6,7 @@ import {
   ManyToOne,
   OneToMany,
   OneToOne,
-  JoinColumn,
 } from 'typeorm';
-
 import { User } from './User.entity';
 import { Weather } from './Weather.entity';
 import { Noise_volume } from './Noise_volume.entity';
@@ -23,6 +21,7 @@ export class Group {
   @Column()
   groupname: string;
 
+
   @ManyToOne((type) => User, (user) => user.groups, { eager: true, cascade :true })
   user: User;
   @Column()
@@ -33,10 +32,10 @@ export class Group {
   @Column()
   weatherId: number;
 
-  @OneToMany((type) => Noise_volume, (noise_volume) => noise_volume.group) // note: we will create author property in the Photo class below
+  @OneToMany((type) => Noise_volume, (noise_volume) => noise_volume.group)
   noiseVolumes: Noise_volume[];
 
-  @OneToOne((type) => Music_volume) // note: we will create author property in the Photo class below
+  @OneToOne((type) => Music_volume)
   musicVolumes: Music_volume[];
 
   @ManyToOne(

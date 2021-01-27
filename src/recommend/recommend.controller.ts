@@ -8,4 +8,9 @@ export class RecommendController {
   getOthers(@Param('id') userId: number) {
     return this.recommendService.getOthers(userId);
   }
+
+  @Get('/')
+  getRecommend() {
+    return this.recommendService.getRecommend();
+  }
 }

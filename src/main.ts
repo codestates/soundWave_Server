@@ -1,6 +1,6 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import * as dotenv from "dotenv";
+import * as dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -15,7 +15,12 @@ async function bootstrap() {
       cert: certFile,
     },
   });
-  app.enableCors()
+
+  app.enableCors({
+    origin: ['https://localhost:3000'],
+    credentials: true,
+  });
+
   await app.listen(3000);
 }
 bootstrap();
