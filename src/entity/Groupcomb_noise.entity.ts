@@ -13,11 +13,10 @@ export class Groupcomb_noise {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: true })
+  @Column({nullable: true})
   groupcombId: number;
 
   @ManyToOne((type) => Noise, (noise) => noise.groupcombNoises)
-  @JoinColumn()
   noise: Noise;
 
   @CreateDateColumn({ name: 'created_at' })

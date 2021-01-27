@@ -22,10 +22,12 @@ export class Noise {
   @OneToMany(
     (type) => Groupcomb_noise,
     (groupcomb_noise) => groupcomb_noise.noise,
-  ) // note: we will create author property in the Photo class below
-  groupcombNoises: Groupcomb_noise[];
+  )
 
-  @OneToMany((type) => Noise_volume, (noise_volume) => noise_volume.noise) // note: we will create author property in the Photo class below
+  @OneToMany(
+    (type) => Noise_volume,
+    (noise_volume) => noise_volume.noise,
+  )
   noiseVolumes: Noise_volume[];
 
   @CreateDateColumn({ name: 'created_at' })

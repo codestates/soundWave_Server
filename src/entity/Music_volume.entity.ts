@@ -16,12 +16,14 @@ export class Music_volume {
   @Column()
   musicUrl: string;
 
-  @Column()
+  @Column({nullable: true})
   volume: number;
 
   @OneToOne((type) => Group)
   @JoinColumn()
   group: Group;
+  @Column()
+  groupId: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

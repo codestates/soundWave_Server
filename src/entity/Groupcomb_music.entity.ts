@@ -18,7 +18,7 @@ export class Groupcomb_music {
   @Column()
   musicUrl: string;
 
-  @Column({ default: 0 })
+  @Column({default : 1})
   count: number;
 
   @OneToMany((type) => Group, (group) => group.groupcombMusic) // note: we will create author property in the Photo class below

@@ -15,19 +15,18 @@ export class Noise_volume {
   @PrimaryGeneratedColumn()
   id: number;
 
-  // @Column()
-  // noise_id: number;
-
   @Column()
   volume: number;
 
   @ManyToOne((type) => Group, (group) => group.noiseVolumes)
-  @JoinColumn()
   group: Group;
+  @Column()
+  groupId: number;
 
   @ManyToOne((type) => Noise, (noise) => noise.noiseVolumes)
-  @JoinColumn()
   noise: Noise;
+  @Column()
+  noiseId: number;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
