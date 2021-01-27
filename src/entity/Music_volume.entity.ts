@@ -14,7 +14,7 @@ export class Music_volume {
   id: number;
 
   @Column()
-  music_url: string;
+  musicUrl: string;
 
   @Column()
   volume: number;

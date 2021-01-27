@@ -15,6 +15,10 @@ async function bootstrap() {
       cert: certFile,
     },
   });
+  app.enableCors({
+    origin: ['https://localhost:3000'],
+    credentials: true,
+  });
   await app.listen(3000);
 }
 bootstrap();
