@@ -6,9 +6,11 @@ import { NoisesModule } from './noises/noises.module';
 import { AuthController } from './auth/auth.controller';
 import { UserService } from './user/user.service';
 import { RecommendModule } from './recommend/recommend.module';
+// import { GroupsController } from './groups/groups.controller';
+import { GroupsModule } from './groups/groups.module';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), NoisesModule, RecommendModule],
+  imports: [TypeOrmModule.forRoot(), NoisesModule, RecommendModule, GroupsModule],
   controllers: [AuthController],
   providers: [FacebookStrategy, UserService],
 })

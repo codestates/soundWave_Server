@@ -13,15 +13,15 @@ export class Groupcomb_music {
   id: number;
 
   @Column()
-  groupcomb_id: number;
+  groupcombId: number;
 
   @Column()
-  music_url: string;
+  musicUrl: string;
 
-  @Column()
+  @Column({default : 1})
   count: number;
 
-  @OneToMany((type) => Group, (group) => group.groupcomb_music) // note: we will create author property in the Photo class below
+  @OneToMany((type) => Group, (group) => group.groupcombMusic) // note: we will create author property in the Photo class below
   groups: Group[];
 
   @CreateDateColumn({ name: 'created_at' })

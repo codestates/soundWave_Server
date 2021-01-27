@@ -9,7 +9,6 @@ export class UserService {
     // 유저 정보를 받아온 후 db에 정보가 없다면 저장
     const checkedUser = await getConnection()
       .createQueryBuilder()
-      .createQueryBuilder()
       .select("user")
       .from(User, "user")
       .where("user.email = :email", { email: user.email })
@@ -27,12 +26,16 @@ export class UserService {
         ])
         .execute();
     }
-
+    
+    const userId = await checkedUser.id;
+    
     let requiredUserInfo = {
       name : user.name,
+      userId,
       profile : user.profileImage
     }
 
     return requiredUserInfo;
   }
 }
+
