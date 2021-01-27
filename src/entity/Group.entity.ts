@@ -5,6 +5,7 @@ import {
   CreateDateColumn,
   ManyToOne,
   OneToMany,
+  JoinColumn,
 } from 'typeorm';
 
 import { User } from './User.entity';
@@ -21,20 +22,23 @@ export class Group {
   groupname: string;
 
   @ManyToOne((type) => User, (user) => user.groups, { eager: true })
+  @JoinColumn()
   user: User;
 
   @ManyToOne((type) => Weather, (weather) => weather.groups, { eager: true })
+  @JoinColumn()
   weather: Weather;
 
   @OneToMany((type) => Noise_volume, (noise_volume) => noise_volume.group) // note: we will create author property in the Photo class below
-  noise_volumes: Noise_volume[];
+  noiseVolumes: Noise_volume[];
 
   @ManyToOne(
     (type) => Groupcomb_music,
     (groupcomb_music) => groupcomb_music.groups,
     { eager: true },
   )
-  groupcomb_music: Groupcomb_music;
+  @JoinColumn()
+  groupcombMusic: Groupcomb_music;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;
