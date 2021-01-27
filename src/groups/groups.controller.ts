@@ -1,5 +1,5 @@
 import {  Controller, Post, Body, Request, Response } from '@nestjs/common';
-import { CreateGroupDto } from './CreateGroupDto';
+import { CreateGroupDto } from './dto/CreateGroupDto';
 import { GroupsService } from './groups.service';
 
 @Controller('groups')

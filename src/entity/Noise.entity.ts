@@ -23,6 +23,7 @@ export class Noise {
     (type) => Groupcomb_noise,
     (groupcomb_noise) => groupcomb_noise.noise,
   )
+  groupcombNoises: Groupcomb_noise[];
 
   @OneToMany(
     (type) => Noise_volume,

@@ -48,7 +48,7 @@ export class GroupsService {
     .where("noise.name IN (:...name)", { name: noiseNames })
     .getMany()
 
-    console.log(findNoiseId)
+    // console.log(findNoiseId)
     //[ Noise { id: 1 }, Noise { id: 2 } ]
     let noiseId = [];
 
@@ -59,7 +59,7 @@ export class GroupsService {
     const noiseIdList = await noiseId.join(',');
 
     // noiseIdList = '1,2';
-    console.log(await noiseIdList)
+    // console.log(await noiseIdList)
     
     const groupNoise = await this.groupcombNoiseRepository
     .createQueryBuilder('groupcombNoise')
@@ -67,7 +67,7 @@ export class GroupsService {
     .groupBy('groupcombNoise.groupcombId')
     .getRawMany();
     
-    console.log(await groupNoise);
+    // console.log(await groupNoise);
     // [
     //   RowDataPacket {
     //     groupcombNoise_groupcombId: 1,
@@ -88,7 +88,7 @@ export class GroupsService {
       .getRawOne()
 
       let lastCombIdKey = Object.keys(findLastCombId)[0];
-      console.log(await findLastCombId[lastCombIdKey]);
+      // console.log(await findLastCombId[lastCombIdKey]);
       findLastCombIdTask.groupcombId = findLastCombId[lastCombIdKey] + 1;
       
       // groupcomb_noise 엔티티에 db를 저장
@@ -142,7 +142,7 @@ export class GroupsService {
     .select("noise")
     .where("noise.name IN (:...name)", { name: noiseNames })
     .getMany();
-    console.log( await findNoiseId, '파인드노이즈볼륨노이즈아이디')
+    // console.log( await findNoiseId, '파인드노이즈볼륨노이즈아이디')
     
     return findNoiseId;
   }
@@ -187,7 +187,7 @@ export class GroupsService {
       values.push(obj);
     }
     // 그룹 저장
-    console.log(await values, "!!!!!!")
+    // console.log(await values, "!!!!!!")
     await getConnection()
     .createQueryBuilder()
     .insert()
