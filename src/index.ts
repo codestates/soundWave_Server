@@ -1,7 +1,6 @@
 import 'reflect-metadata';
 import { createConnection } from 'typeorm';
 import { Weather } from './entity/Weather.entity';
-// import { Noise } from './entity/Noise.entity';
 
 createConnection()
   .then(async (connection) => {

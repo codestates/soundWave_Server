@@ -16,7 +16,7 @@ async function bootstrap() {
       cert: certFile,
     },
   });
-  // somewhere in your initialization file
+  
   app.use(cookieParser());
 
   app.enableCors({
