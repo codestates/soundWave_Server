@@ -24,8 +24,28 @@ export class RecommendService {
       .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
       .leftJoinAndSelect('group.weather', 'weather')
       .leftJoinAndSelect('group.user', 'user')
-
-      .getMany();
+      .select('user.id')
+      .addSelect('user.email')
+      .addSelect('weather.weather')
+      .addSelect('groupcombMusic.musicUrl')
+      .addSelect('group.groupname')
+      .where('group.userId = :userId', { userId: userId })
+      .getMany()
+      .then(async (data) => {
+        for (let i = 0; i < data.length; i++) {
+          const noise = await getRepository(Noise_volume)
+            .createQueryBuilder('noiseVolume')
+            .innerJoinAndSelect('noiseVolume.noise', 'noise')
+            .select('noise.name')
+            .addSelect('noiseVolume.volume')
+            .where('noiseVolume.groupId = :groupId', {
+              groupId: data[i].user.id,
+            })
+            .getMany();
+          data[i]['noise'] = noise;
+        }
+        return data;
+      });
     return others;
   }
 
