@@ -7,13 +7,8 @@ import { UserDto } from './user.dto';
 export class UserService {
   async findOrCreate(user: UserDto): Promise<any> {
     // 유저 정보를 받아온 후 db에 정보가 없다면 저장
-    const checkedUser = await getConnection()
-      .createQueryBuilder()
-      .select("user")
-      .from(User, "user")
-      .where("user.email = :email", { email: user.email })
-      .andWhere("user.oauth = :oauth", { oauth: user.oauth })
-      .getOne();
+    const checkedUser = await this.findAndCheckedUser(user.email, user.oauth);
+    let userId;
     
     // 유저가 없다면
     if (!checkedUser) {
@@ -25,9 +20,11 @@ export class UserService {
           { email: user.email, oauth: user.oauth, profile: user.profileImage}, 
         ])
         .execute();
+
+        userId = (await this.findAndCheckedUser(user.email, user.oauth)).id;
+    } else {
+      userId = checkedUser.id;
     }
-    
-    const userId = await checkedUser.id;
     
     let requiredUserInfo = {
       name : user.name,
@@ -36,6 +33,16 @@ export class UserService {
     }
 
     return requiredUserInfo;
+  }
+
+  findAndCheckedUser = async(email: string, oauth: string) => {
+    return await getConnection()
+      .createQueryBuilder()
+      .select("user")
+      .from(User, "user")
+      .where("user.email = :email", { email })
+      .andWhere("user.oauth = :oauth", { oauth })
+      .getOne();
   }
 }
 
