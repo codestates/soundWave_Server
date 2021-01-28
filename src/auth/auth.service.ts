@@ -26,7 +26,7 @@ export class AuthService {
           ])
           .execute();
       }
-      res.cookie('oathInfo', req.user, {
+      res.cookie('oauthInfo', req.user, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',

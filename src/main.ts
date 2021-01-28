@@ -1,6 +1,7 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
 import * as dotenv from 'dotenv';
+import * as cookieParser from 'cookie-parser';
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ async function bootstrap() {
       cert: certFile,
     },
   });
+  // somewhere in your initialization file
+  app.use(cookieParser());
 
   app.enableCors({
     origin: ['https://localhost:3001'],

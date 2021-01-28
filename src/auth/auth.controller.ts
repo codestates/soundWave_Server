@@ -4,7 +4,6 @@ import {
   UseGuards,
   HttpStatus,
   Req,
-  Redirect,
   Res,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
@@ -24,13 +23,15 @@ export class AuthController {
   // facebook 로그인 시도 후 리디렉션 라우터
   @Get('facebook/redirect')
   @UseGuards(AuthGuard('facebook'))
-  async facebookLoginRedirect(@Req() req: Request): Promise<any> {
-    return {
-      statusCode: HttpStatus.OK,
-      data: req.user,
-    };
+  async facebookLoginRedirect(@Req() req: Request, @Res() res): Promise<any> {
+    res.cookie('oauthInfo', req.user, {
+      httpOnly: true,
+      secure: true,
+      sameSite: 'none',
+    });
+    res.redirect('https://localhost:3001');
   }
-
+  
   //google 로그인 요청
   @Get('google')
   @UseGuards(AuthGuard('google'))
@@ -41,5 +42,10 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   googleAuthRedirect(@Req() req, @Res() res) {
     return this.authService.googleLogin(req, res);
+  }
+
+  @Get('/check')
+  async checkUser(@Req() req, @Res() res) {
+    res.status(200).send(req.cookies.oauthInfo);
   }
 }
