@@ -6,12 +6,12 @@ export class AuthService {
     if (!req.user) {
       return 'No user from google';
     } else {
-      res.cookie('oathInfo', req.user, {
+      res.cookie('oauthInfo', req.user, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
       });
-      res.redirect('https://localhost:3001');
+      res.redirect('https://localhost:3000');
       // return {
       //   message: 'User information from google',
       //   user: req.user,
