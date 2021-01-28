@@ -23,7 +23,7 @@ export class GroupsController {
 
   @Get()
   async findAllGroups(@Request() req, @Query() query) {
-    const accessToken = await req.headers.authorization;
+    // const accessToken = await req.headers.authorization;
     console.log(query);
     // return this.groupsService.findAllGroups();
   }
