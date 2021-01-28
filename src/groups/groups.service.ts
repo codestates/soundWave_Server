@@ -1,15 +1,16 @@
 import { InjectRepository } from '@nestjs/typeorm';
 import { Injectable } from '@nestjs/common';
-import { getConnection, Repository } from 'typeorm';
+import { createQueryBuilder, getConnection, getManager, Repository } from 'typeorm';
 import { GroupcombNoiseIdDto } from './dto/groupcombNoiseIdDto';
 import { CreateGroupDto } from './dto/CreateGroupDto';
 import { Group } from 'src/entity/Group.entity';
 import { Noise } from 'src/entity/Noise.entity';
-import { Weather } from 'src/entity/Weather.entity';
 import { Groupcomb_noise } from 'src/entity/Groupcomb_noise.entity';
 import { Groupcomb_music } from 'src/entity/Groupcomb_music.entity';
 import { Music_volume } from 'src/entity/Music_volume.entity';
 import { Noise_volume } from 'src/entity/Noise_volume.entity';
+import { User } from 'src/entity/User.entity';
+import { Weather } from './../entity/Weather.entity';
 
 @Injectable()
 export class GroupsService {
@@ -284,7 +285,59 @@ export class GroupsService {
     }
   }
 
-  findAllGroups = () => {
+  findAllGroups = async (userId: number, token: string | undefined) => {
+    if (!token) {
+      return "유효하지 않은 토큰입니다!";
+    }
 
+    const leftJoinGroupDatas = await getManager()
+    .createQueryBuilder(Group, 'group')
+    .addSelect('group.id')
+    .addSelect('weather.weather')
+    .addSelect('musicVolume.musicUrl')
+    .addSelect('musicVolume.volume')
+    .addSelect("noiseVolume.volume")
+    .addSelect('noise.name')
+    .addSelect('noise.url')
+    .leftJoin(User, 'user', 'group.userId = user.id')
+    .leftJoin(Weather, 'weather', 'group.weatherId = weather.id')
+    .leftJoin(Music_volume, 'musicVolume', 'group.id = musicVolume.groupId')
+    .leftJoin(Noise_volume, 'noiseVolume', 'group.id = noiseVolume.groupId')
+    .leftJoin(Noise, 'noise', 'noise.id = noiseVolume.noiseId')
+    .where(`user.id = ${userId}`)
+    .getRawMany()
+    
+    if (!leftJoinGroupDatas.length) {
+      return "저장된 그룹이 없는 유저!";
+    }
+
+    let groupsList = [];
+    let checkedGroupName = [];
+
+    for (let data of leftJoinGroupDatas) {
+      let groupName = data.group_groupname;
+      let weather = data.weather_weather;
+      let music = { url: data.musicVolume_musicUrl, volume: data.musicVolume_volume}
+      let noises = [];
+
+      if (checkedGroupName.indexOf(groupName) === -1) {
+        checkedGroupName.push(groupName);
+
+        groupsList.push({ groupName, weather, music, noises });
+      }
+    }
+    
+    for (let i = 0; i <groupsList.length; i++) {
+      for (let data of leftJoinGroupDatas) {
+        if (groupsList[i].groupName === data.group_groupname) {
+          let name = data.noise_name;
+          let url = data.noise_url;
+          let volume = data.noiseVolume_volume;
+
+          groupsList[i].noises.push({name, url, volume})
+        }
+      }
+    }
+    return groupsList;
   }
 }

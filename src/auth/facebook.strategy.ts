@@ -40,14 +40,3 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
     done(null, payload);
   }
 }
-
-// {
-//   "statusCode":200,
-//   "data" : {
-//     "user" : {
-//       "name" : "정하랑",
-//       "profile" : "https://platform-lookaside.fbsbx.com/platform/profilepic/?asid=1833401046814451&height=50&width=50&ext=1614008922&hash=AeT95vqzn9AzRcLuwzw"
-//     },
-//     "accessToken" : "EAAK9TzzZB2fgBAPYPdZCFIZCQzbiGI5gWcayZAITdZB3ZCuQ2mrqZAspfDEbqrxlBSktbpbN5VHMNgwWIbYbR96blwbNLm1MgqQXK7QV3xq6Y5BTS4OY5JFbpJF3Kn7SNpZBrcQs7cZBcDEGZBZBuypAPB0eA0i3MD6XkPUiMZBXVMNcUQZDZD"
-//   }
-// }
