@@ -1,4 +1,4 @@
-import {  Controller, Post, Body, Request, Response } from '@nestjs/common';
+import {  Controller, Post, Body, Request, Response, Get, Query } from '@nestjs/common';
 import { CreateGroupDto } from './dto/CreateGroupDto';
 import { GroupsService } from './groups.service';
 
@@ -20,4 +20,12 @@ export class GroupsController {
     }
     
   }
+
+  @Get()
+  async findAllGroups(@Request() req, @Query() query) {
+    const accessToken = await req.headers.authorization;
+    console.log(query);
+    // return this.groupsService.findAllGroups();
+  }
+
 }
