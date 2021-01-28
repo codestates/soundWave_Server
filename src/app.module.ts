@@ -8,10 +8,18 @@ import { RecommendModule } from './recommend/recommend.module';
 import { GroupsModule } from './groups/groups.module';
 import { AuthService } from './auth/auth.service';
 import { GoogleStrategy } from './auth/google.strategy';
+import { User } from './entity/User.entity';
 
 @Module({
-  imports: [TypeOrmModule.forRoot(), NoisesModule, RecommendModule, GroupsModule],
+  imports: [
+    TypeOrmModule.forRoot(),
+    TypeOrmModule.forFeature([User]),
+    NoisesModule,
+    RecommendModule,
+    GroupsModule,
+  ],
   controllers: [AuthController],
   providers: [FacebookStrategy, GoogleStrategy, UserService, AuthService],
+  exports: [TypeOrmModule],
 })
 export class AppModule {}
