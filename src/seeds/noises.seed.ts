@@ -13,7 +13,7 @@ export default class CreateNoises implements Seeder {
         { name: 'wave', url: '326702198' },
         { name: 'campfire', url: '13285945' },
         { name: 'drive', url: '648410951' },
-        { name: 'night', url: '7598189' },
+        { name: 'night', url: '366135758' },
       ])
       .execute();
   }

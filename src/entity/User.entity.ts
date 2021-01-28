@@ -18,7 +18,7 @@ export class User {
   @Column()
   oauth: string;
 
-  @Column({ nullable: true })
+  @Column({ nullable: true, length: 400 })
   profile: string;
 
   @OneToMany((type) => Group, (group) => group.user) // note: we will create author property in the Photo class below
