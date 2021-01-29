@@ -29,7 +29,7 @@ export class GoogleStrategy extends PassportStrategy(Strategy, 'google') {
       email: emails[0].value,
       name: `${name.givenName} ${name.familyName}`,
       profileImage: photos[0].value,
-      oauth: 'facebook',
+      oauth: 'google',
     };
     const payload = {
       user: user,

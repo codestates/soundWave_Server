@@ -15,6 +15,7 @@ export class AuthService {
       const findUser = await getRepository(User)
         .createQueryBuilder('user')
         .where('user.email = :email', { email: email })
+        .andWhere('user.oauth = :oauth', { oauth: req.user.user.oauth })
         .getOne();
 
       if (!findUser) {
@@ -25,7 +26,7 @@ export class AuthService {
           .values([
             {
               email: email,
-              oauth: 'google',
+              oauth: req.user.user.oauth,
               profile: req.user.user.profileImage,
             },
           ])
