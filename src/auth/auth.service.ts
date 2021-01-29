@@ -16,6 +16,7 @@ export class AuthService {
         .createQueryBuilder('user')
         .where('user.email = :email', { email: email })
         .getOne();
+
       if (!findUser) {
         await getConnection()
           .createQueryBuilder()
@@ -26,6 +27,7 @@ export class AuthService {
           ])
           .execute();
       }
+      
       res.cookie('oauthInfo', req.user, {
         httpOnly: true,
         secure: true,
