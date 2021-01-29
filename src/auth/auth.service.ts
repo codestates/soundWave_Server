@@ -11,11 +11,11 @@ export class AuthService {
       res.redirect('https://localhost:3001');
       // return 'No user from google';
     } else {
-      const email = req.user.user.email;
+      const email = req.user.email;
       const findUser = await getRepository(User)
         .createQueryBuilder('user')
         .where('user.email = :email', { email: email })
-        .andWhere('user.oauth = :oauth', { oauth: req.user.user.oauth })
+        .andWhere('user.oauth = :oauth', { oauth: req.user.oauth })
         .getOne();
 
       if (!findUser) {
@@ -26,14 +26,32 @@ export class AuthService {
           .values([
             {
               email: email,
-              oauth: req.user.user.oauth,
-              profile: req.user.user.profileImage,
+              oauth: req.user.oauth,
+              profile: req.user.profile,
             },
           ])
           .execute();
       }
-      
-      res.cookie('oauthInfo', req.user, {
+      // console.log(findUser.id);
+      const userId = await getRepository(User)
+        .createQueryBuilder('user')
+        .where('user.email = :email', { email: email })
+        .andWhere('user.oauth = :oauth', { oauth: req.user.oauth })
+        .getOne()
+        .then((data) => {
+          return data.id;
+        });
+
+      const oauthInfo = {
+        accessToken: req.user.accessToken,
+        user: {
+          name: req.user.name,
+          profile: req.user.profile,
+          userId: userId,
+        },
+      };
+      console.log(oauthInfo);
+      res.cookie('oauthInfo', oauthInfo, {
         httpOnly: true,
         secure: true,
         sameSite: 'none',
