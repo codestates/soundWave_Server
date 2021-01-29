@@ -11,7 +11,7 @@ export class AuthService {
       res.redirect('https://localhost:3001');
       // return 'No user from google';
     } else {
-      const email = req.user.email;
+      const email = req.user.user.email;
       const findUser = await getRepository(User)
         .createQueryBuilder('user')
         .where('user.email = :email', { email: email })
@@ -22,7 +22,11 @@ export class AuthService {
           .insert()
           .into(User)
           .values([
-            { email: email, oauth: 'google', profile: req.user.picture },
+            {
+              email: email,
+              oauth: 'google',
+              profile: req.user.user.profileImage,
+            },
           ])
           .execute();
       }
