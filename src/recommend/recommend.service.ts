@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { getConnection, getRepository, Repository } from 'typeorm';
 import { Group } from 'src/entity/Group.entity';
+import { User } from 'src/entity/User.entity';
 import { Weather } from 'src/entity/Weather.entity';
 import { Noise_volume } from 'src/entity/Noise_volume.entity';
 import * as dotenv from 'dotenv';
@@ -19,34 +20,47 @@ export class RecommendService {
   ) {}
 
   async getOthers(userId) {
-    const others = await getRepository(Group)
-      .createQueryBuilder('group')
-      .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
-      .leftJoinAndSelect('group.weather', 'weather')
-      .leftJoinAndSelect('group.user', 'user')
-      .select('user.id')
-      .addSelect('user.email')
-      .addSelect('weather.weather')
-      .addSelect('groupcombMusic.musicUrl')
-      .addSelect('group.groupname')
-      .where('group.userId = :userId', { userId: userId })
-      .getMany()
-      .then(async (data) => {
-        for (let i = 0; i < data.length; i++) {
-          const noise = await getRepository(Noise_volume)
-            .createQueryBuilder('noiseVolume')
-            .innerJoinAndSelect('noiseVolume.noise', 'noise')
-            .select('noise.name')
-            .addSelect('noiseVolume.volume')
-            .where('noiseVolume.groupId = :groupId', {
-              groupId: data[i].user.id,
-            })
-            .getMany();
-          data[i]['noise'] = noise;
-        }
-        return data;
-      });
-    return others;
+    const user = await getRepository(User)
+      .createQueryBuilder('user')
+      .where('user.id = :id', { id: userId })
+      .getOne();
+    if (!user) {
+      return {
+        message: '존재하지 않는 유저 정보!',
+      };
+    } else {
+      const others = await getRepository(Group)
+        .createQueryBuilder('group')
+        .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
+        .leftJoinAndSelect('group.weather', 'weather')
+        .leftJoinAndSelect('group.user', 'user')
+        .select('user.id')
+        .addSelect('user.email')
+        .addSelect('weather.weather')
+        .addSelect('groupcombMusic.musicUrl')
+        .addSelect('group.groupname')
+        .where('group.userId = :userId', { userId: userId })
+        .getMany()
+        .then(async (data) => {
+          for (let i = 0; i < data.length; i++) {
+            const noise = await getRepository(Noise_volume)
+              .createQueryBuilder('noiseVolume')
+              .innerJoinAndSelect('noiseVolume.noise', 'noise')
+              .select('noise.name')
+              .addSelect('noiseVolume.volume')
+              .where('noiseVolume.groupId = :groupId', {
+                groupId: data[i].user.id,
+              })
+              .getMany();
+            data[i]['noise'] = noise;
+          }
+          return data;
+        });
+      return {
+        data: others,
+        message: '해당 유저의 그룹을 성공적으로 불러왔습니다!',
+      };
+    }
   }
 
   async getRecommend() {
