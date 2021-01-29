@@ -88,7 +88,7 @@ export class GroupsService {
       .getRawOne()
 
       let lastCombIdKey = Object.keys(findLastCombId)[0];
-      // console.log(await findLastCombId[lastCombIdKey]);
+
       findLastCombIdTask.groupcombId = findLastCombId[lastCombIdKey] + 1;
       
       // groupcomb_noise 엔티티에 db를 저장
@@ -106,7 +106,6 @@ export class GroupsService {
       return "그룹 저장 성공!";
   }
   
-
   findGroupcombNoiseId = async (noises: any[], id: string) => {
     let checked: boolean = false;
     let groupcombId: number = 0;
@@ -174,10 +173,9 @@ export class GroupsService {
   saveGroupcombNoise = async (noiseId: number[], groupcombId: number) => {
     let values = [];
     
-    // console.log(noiseId);
     for (let i = 0; i < noiseId.length; i++) {
       let obj: GroupcombNoiseIdDto = { noise: noiseId[i], groupcombId};
-      console.log(noiseId[i]);
+
       values.push(obj);
     }
     // 그룹 저장
@@ -339,5 +337,99 @@ export class GroupsService {
       }
     }
     return groupsList;
+  }
+
+  deleteGroupRequest = async (groupId: number, token: string | undefined) => {
+    if (!token) {
+      "유효하지 않은 토큰입니다!"
+    }
+    const groupcombMusicId = (await this.findGroupcombMusicIdInGroup(groupId)).groupcombMusicId;
+    
+    await this.deleteNoiseVolumeAndMusicVolume(groupId);
+    await this.deleteGroup(groupId);
+    await this.deleteGroupcombMusicOrgroupcombNoiseOrUncount(groupcombMusicId);
+
+    return "그룹 삭제 완료!"
+  }
+
+  deleteNoiseVolumeAndMusicVolume = async (groupId: number) => {
+    await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Noise_volume)
+    .where("groupId = :groupId", { groupId })
+    .execute();
+
+    await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Music_volume)
+    .where("groupId = :groupId", { groupId })
+    .execute();
+  }
+
+  deleteGroup = async (id: number) => {
+    // 지우기 전에 그룹콤브 뮤직 아이디 저장
+    await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Group)
+    .where("id = :id", { id })
+    .execute();
+  }
+
+  findGroupcombMusicIdInGroup = async (groupId: number): Promise<any> => {
+    return await this.groupRepository
+    .createQueryBuilder('group')
+    .select("group.groupcombMusicId")
+    .where("group.id = :groupId", { groupId })
+    .getOne();
+  }
+
+  deleteGroupcombMusicOrgroupcombNoiseOrUncount = async (combMusicId: number) => {
+    const data = await this.groupcombMusicRepository
+    .createQueryBuilder('groupcombMusic')
+    .select(["groupcombMusic.count", "groupcombMusic.groupcombId"])
+    .where("groupcombMusic.id = :combMusicId", { combMusicId })
+    .getOne();
+    
+    let count = data.count;
+    let groupcombId = data.groupcombId;
+
+    if (count === 1) {
+      await this.deleteGroupcombMusic(combMusicId);
+      await this.deleteGroupcombNoise(groupcombId);
+    } else {
+      await this.uncountGroupcombMusic(combMusicId);
+    }
+  }
+
+  deleteGroupcombMusic = async (id: number) => {
+    await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Groupcomb_music)
+    .where("id = :id", { id })
+    .execute();
+  }
+  
+  deleteGroupcombNoise = async (groupcombId: number) => {
+    await getConnection()
+    .createQueryBuilder()
+    .delete()
+    .from(Groupcomb_noise)
+    .where("groupcombId = :groupcombId", { groupcombId })
+    .execute();
+  }
+
+  uncountGroupcombMusic = async (id: number) => {
+    await getConnection()
+    .createQueryBuilder()
+    .update(Groupcomb_music)
+    .set({
+      count: () => "count - 1"
+    })
+    .where("id = :id", {id})
+    .execute();
   }
 }

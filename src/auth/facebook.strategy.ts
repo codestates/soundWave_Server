@@ -22,7 +22,7 @@ export class FacebookStrategy extends PassportStrategy(Strategy, "facebook") {
     done: (err: any, user: any, info?: any) => void
   ): Promise<any> {
     const { name, photos, emails } = profile;
-    // console.log(profile);
+
     const allUserInfo = {
       email: emails[0].value,
       name: `${name.familyName}${name.givenName}`,

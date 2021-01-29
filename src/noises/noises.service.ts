@@ -12,7 +12,7 @@ export class NoisesService {
 
   async getAllNoises() {
     const checkedNoise = await this.findAndCheckNoise();
-    console.log(await checkedNoise);
+
     if (!checkedNoise.length) {
       // 노이즈가 없다면
       await getConnection()
