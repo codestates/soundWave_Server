@@ -12,6 +12,7 @@ import { Groupcomb_noise } from 'src/entity/Groupcomb_noise.entity';
 import { Groupcomb_music } from 'src/entity/Groupcomb_music.entity';
 import { group } from 'console';
 dotenv.config();
+
 @Injectable()
 export class RecommendService {
   constructor(
@@ -89,7 +90,7 @@ export class RecommendService {
           }
           // 노이즈 조합
           let pickedList = [];
-          while (pickedList.length < 5) {
+          while (pickedList.length < 5 && pickedList.length < listArr.length) {
             let randomList = listArr.splice(
               Math.floor(Math.random() * listArr.length),
               1,
