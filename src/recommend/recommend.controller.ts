@@ -1,4 +1,4 @@
-import { Controller, Get, Param } from '@nestjs/common';
+import { Controller, Get, Param, Query } from '@nestjs/common';
 import { RecommendService } from './recommend.service';
 
 @Controller('recommend')
@@ -10,7 +10,12 @@ export class RecommendController {
   }
 
   @Get('/')
-  getRecommend() {
-    return this.recommendService.getRecommend();
+  getRecommend(@Query() query) {
+    return this.recommendService.getRecommend(query);
+  }
+
+  @Get('/test')
+  gettest(@Query() query) {
+    return this.recommendService.test(query);
   }
 }
