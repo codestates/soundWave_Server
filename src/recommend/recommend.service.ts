@@ -7,9 +7,8 @@ import { Weather } from 'src/entity/Weather.entity';
 import { Noise_volume } from 'src/entity/Noise_volume.entity';
 import * as dotenv from 'dotenv';
 import fetch from 'node-fetch';
-
+import { Music_volume } from 'src/entity/Music_volume.entity';
 dotenv.config();
-
 @Injectable()
 export class RecommendService {
   constructor(
@@ -18,7 +17,6 @@ export class RecommendService {
     @InjectRepository(Weather)
     private weatherRepository: Repository<Weather>,
   ) {}
-
   async getOthers(userId) {
     const user = await getRepository(User)
       .createQueryBuilder('user')
@@ -36,6 +34,8 @@ export class RecommendService {
         .leftJoinAndSelect('group.user', 'user')
         .select('user.id')
         .addSelect('user.email')
+        .addSelect('user.profile')
+        .addSelect('group.id')
         .addSelect('weather.weather')
         .addSelect('groupcombMusic.musicUrl')
         .addSelect('group.groupname')
@@ -49,10 +49,18 @@ export class RecommendService {
               .select('noise.name')
               .addSelect('noiseVolume.volume')
               .where('noiseVolume.groupId = :groupId', {
-                groupId: data[i].user.id,
+                groupId: data[i].id,
               })
               .getMany();
             data[i]['noise'] = noise;
+            const musicVolume = await getRepository(Music_volume)
+              .createQueryBuilder('musicVolume')
+              .select('musicVolume.volume')
+              .where('musicVolume.groupId = :groupId', {
+                groupId: data[i].id,
+              })
+              .getOne();
+            data[i]['musicVolume'] = musicVolume.volume;
           }
           return data;
         });
@@ -62,14 +70,12 @@ export class RecommendService {
       };
     }
   }
-
   async getRecommend() {
     const api = await fetch(
       `http://api.openweathermap.org/data/2.5/weather?lat=35&lon=139&units=metric&appid=${process.env.WEATHERAPI_KEY}`,
     ).then((res) => {
       return res.json();
     });
-
     if (api.weather.main === 'rain') {
       const weatherId = await getRepository(Weather)
         .createQueryBuilder('weather')
@@ -79,7 +85,6 @@ export class RecommendService {
         .then((data) => {
           return data.id;
         });
-
       const weatherRecommend = await getRepository(Group)
         .createQueryBuilder('group')
         .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
@@ -87,6 +92,8 @@ export class RecommendService {
         .leftJoinAndSelect('group.user', 'user')
         .select('user.id')
         .addSelect('user.email')
+        .addSelect('user.profile')
+        .addSelect('group.id')
         .addSelect('weather.weather')
         .addSelect('groupcombMusic.musicUrl')
         .addSelect('group.groupname')
@@ -100,10 +107,18 @@ export class RecommendService {
               .select('noise.name')
               .addSelect('noiseVolume.volume')
               .where('noiseVolume.groupId = :groupId', {
-                groupId: data[i].user.id,
+                groupId: data[i].id,
               })
               .getMany();
             data[i]['noise'] = noise;
+            const musicVolume = await getRepository(Music_volume)
+              .createQueryBuilder('musicVolume')
+              .select('musicVolume.volume')
+              .where('musicVolume.groupId = :groupId', {
+                groupId: data[i].id,
+              })
+              .getOne();
+            data[i]['musicVolume'] = musicVolume.volume;
           }
           return data;
         });
@@ -117,7 +132,6 @@ export class RecommendService {
         .then((data) => {
           return data.id;
         });
-
       const weatherRecommend = await getRepository(Group)
         .createQueryBuilder('group')
         .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
@@ -125,6 +139,8 @@ export class RecommendService {
         .leftJoinAndSelect('group.user', 'user')
         .select('user.id')
         .addSelect('user.email')
+        .addSelect('user.profile')
+        .addSelect('group.id')
         .addSelect('weather.weather')
         .addSelect('groupcombMusic.musicUrl')
         .addSelect('group.groupname')
@@ -138,10 +154,18 @@ export class RecommendService {
               .select('noise.name')
               .addSelect('noiseVolume.volume')
               .where('noiseVolume.groupId = :groupId', {
-                groupId: data[i].user.id,
+                groupId: data[i].id,
               })
               .getMany();
             data[i]['noise'] = noise;
+            const musicVolume = await getRepository(Music_volume)
+              .createQueryBuilder('musicVolume')
+              .select('musicVolume.volume')
+              .where('musicVolume.groupId = :groupId', {
+                groupId: data[i].id,
+              })
+              .getOne();
+            data[i]['musicVolume'] = musicVolume.volume;
           }
           return data;
         });
@@ -155,7 +179,6 @@ export class RecommendService {
         .then((data) => {
           return data.id;
         });
-
       const weatherRecommend = await getRepository(Group)
         .createQueryBuilder('group')
         .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
@@ -163,6 +186,8 @@ export class RecommendService {
         .leftJoinAndSelect('group.user', 'user')
         .select('user.id')
         .addSelect('user.email')
+        .addSelect('user.profile')
+        .addSelect('group.id')
         .addSelect('weather.weather')
         .addSelect('groupcombMusic.musicUrl')
         .addSelect('group.groupname')
@@ -176,10 +201,18 @@ export class RecommendService {
               .select('noise.name')
               .addSelect('noiseVolume.volume')
               .where('noiseVolume.groupId = :groupId', {
-                groupId: data[i].user.id,
+                groupId: data[i].id,
               })
               .getMany();
             data[i]['noise'] = noise;
+            const musicVolume = await getRepository(Music_volume)
+              .createQueryBuilder('musicVolume')
+              .select('musicVolume.volume')
+              .where('musicVolume.groupId = :groupId', {
+                groupId: data[i].id,
+              })
+              .getOne();
+            data[i]['musicVolume'] = musicVolume.volume;
           }
           return data;
         });
@@ -193,7 +226,6 @@ export class RecommendService {
         .then((data) => {
           return data.id;
         });
-
       const weatherRecommend = await getRepository(Group)
         .createQueryBuilder('group')
         .leftJoinAndSelect('group.groupcombMusic', 'groupcombMusic')
@@ -201,6 +233,8 @@ export class RecommendService {
         .leftJoinAndSelect('group.user', 'user')
         .select('user.id')
         .addSelect('user.email')
+        .addSelect('user.profile')
+        .addSelect('group.id')
         .addSelect('weather.weather')
         .addSelect('groupcombMusic.musicUrl')
         .addSelect('group.groupname')
@@ -214,10 +248,18 @@ export class RecommendService {
               .select('noise.name')
               .addSelect('noiseVolume.volume')
               .where('noiseVolume.groupId = :groupId', {
-                groupId: data[i].user.id,
+                groupId: data[i].id,
               })
               .getMany();
             data[i]['noise'] = noise;
+            const musicVolume = await getRepository(Music_volume)
+              .createQueryBuilder('musicVolume')
+              .select('musicVolume.volume')
+              .where('musicVolume.groupId = :groupId', {
+                groupId: data[i].id,
+              })
+              .getOne();
+            data[i]['musicVolume'] = musicVolume.volume;
           }
           return data;
         });
