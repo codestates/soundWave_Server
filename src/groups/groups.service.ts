@@ -313,6 +313,7 @@ export class GroupsService {
     let checkedGroupName = [];
 
     for (let data of leftJoinGroupDatas) {
+      let groupId = data.group_id;
       let groupName = data.group_groupname;
       let weather = data.weather_weather;
       let music = { url: data.musicVolume_musicUrl, volume: data.musicVolume_volume}
@@ -321,7 +322,7 @@ export class GroupsService {
       if (checkedGroupName.indexOf(groupName) === -1) {
         checkedGroupName.push(groupName);
 
-        groupsList.push({ groupName, weather, music, noises });
+        groupsList.push({ groupId, groupName, weather, music, noises });
       }
     }
     
