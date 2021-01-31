@@ -182,6 +182,8 @@ export class RecommendService {
           .addSelect('groupcombMusic.musicUrl')
           .addSelect('group.groupname')
           .where('group.weatherId = :weatherId', { weatherId: weatherId })
+          .orderBy('RAND()')
+          .take(10)
           .getMany()
           .then(async (data) => {
             for (let i = 0; i < data.length; i++) {
@@ -229,6 +231,8 @@ export class RecommendService {
           .addSelect('groupcombMusic.musicUrl')
           .addSelect('group.groupname')
           .where('group.weatherId = :weatherId', { weatherId: weatherId })
+          .orderBy('RAND()')
+          .take(10)
           .getMany()
           .then(async (data) => {
             for (let i = 0; i < data.length; i++) {
@@ -276,6 +280,8 @@ export class RecommendService {
           .addSelect('groupcombMusic.musicUrl')
           .addSelect('group.groupname')
           .where('group.weatherId = :weatherId', { weatherId: weatherId })
+          .orderBy('RAND()')
+          .take(10)
           .getMany()
           .then(async (data) => {
             for (let i = 0; i < data.length; i++) {
@@ -323,6 +329,8 @@ export class RecommendService {
           .addSelect('groupcombMusic.musicUrl')
           .addSelect('group.groupname')
           .where('group.weatherId = :weatherId', { weatherId: weatherId })
+          .orderBy('RAND()')
+          .take(10)
           .getMany()
           .then(async (data) => {
             for (let i = 0; i < data.length; i++) {
