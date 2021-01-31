@@ -8,7 +8,7 @@ import { User } from '../entity/User.entity';
 export class AuthService {
   async googleLogin(req, res) {
     if (!req.user) {
-      res.redirect('https://localhost:3001');
+      res.redirect('https://www.sounds-wave.com');
       // return 'No user from google';
     } else {
       const email = req.user.email;
@@ -56,7 +56,7 @@ export class AuthService {
         secure: true,
         sameSite: 'none',
       });
-      res.redirect('https://localhost:3001');
+      res.redirect('https://www.sounds-wave.com');
       // return {
       //   message: 'User information from google',
       //   user: req.user,

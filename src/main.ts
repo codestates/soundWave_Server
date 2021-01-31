@@ -21,7 +21,7 @@ async function bootstrap() {
 
   app.enableCors({
     // origin: ['https://localhost:3001'],
-    origin: ['https:www.sounds-wave.com'],
+    origin: ['https://www.sounds-wave.com'],
     credentials: true,
     methods: ['GET', 'PUT', 'POST', 'PATCH', 'OPTIONS', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
