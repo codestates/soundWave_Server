@@ -29,7 +29,7 @@ export class AuthController {
       secure: true,
       sameSite: 'none',
     });
-    res.redirect('https://localhost:3001');
+    res.redirect('https://www.sounds-wave.com');
   }
 
   //google 로그인 요청
