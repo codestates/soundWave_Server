@@ -13,7 +13,7 @@
 
 -----
 <p align="center">
-  Client 레포지토리는 <a href="https://github.com/codestates/soundWave_Serve">이곳</a>에서 확인할 수 있습니다!
+  Client 레포지토리는 <a href="https://github.com/codestates/soundWave_Client">이곳</a>에서 확인할 수 있습니다!
 </p>
 
 ## Service
