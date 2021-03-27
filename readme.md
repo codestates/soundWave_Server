@@ -43,7 +43,7 @@
 
 | TEAM      | Position      | Blog                                      | Github                                           |
 | --------- |--------- | ----------------------------------------- | ------------------------------------------------ |
-| 🤗 정하랑 | BackEnd| [tstory](https://deemmun.tistory.com/)        | [@Hal-ang](https://github.com/Hal-ang)           |
+| 🤗 정하랑 | BackEnd| [Tistory](https://deemmun.tistory.com/)        | [@Hal-ang](https://github.com/Hal-ang)           |
 | :smiley: 채유일 | BackEnd| []() | [@romesway](https://github.com/romesway)           |
 | :drooling_face: 최정호 | FrontEnd| [velog](https://velog.io/@jeongho3786)          | [@jeongho3786](https://github.com/jeongho3786) |
 | :nerd_face: 박윤철 | FrontEnd|[medium](https://medium.com/a-record-than-a-memory)          | [@mrsimplelife](https://github.com/mrsimplelife) |
